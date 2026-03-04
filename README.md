@@ -13,3 +13,7 @@ Proyecto desarrollado como práctica académica utilizando:
 - React + TypeScript
 - PostgreSQL
 - Docker
+
+# Integrantes
+
+- Tatiana Carolina Martinez Franco (MF24026)
