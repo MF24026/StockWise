@@ -13,3 +13,6 @@ Proyecto desarrollado como práctica académica utilizando:
 - React + TypeScript
 - PostgreSQL
 - Docker
+
+INTEGRANTES
+-Ricardo Ernesto Paiz Lemus PL23022
