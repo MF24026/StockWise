@@ -1,3 +1,4 @@
+
 # StockWise
 
 StockWise es un sistema de gestión de inventarios que permite a las empresas
@@ -14,6 +15,9 @@ Proyecto desarrollado como práctica académica utilizando:
 - PostgreSQL
 - Docker
 
+# INTEGRANTES
+
+- Andrés Zavala Alvarado CARNET: za21010
 # Integrantes
 
 - Tatiana Carolina Martinez Franco (MF24026)
