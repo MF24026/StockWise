@@ -1,3 +1,4 @@
+
 # StockWise
 
 StockWise es un sistema de gestión de inventarios que permite a las empresas
@@ -9,10 +10,26 @@ la toma de decisiones.
 
 Proyecto desarrollado como práctica académica utilizando:
 
+- Spring Boot
+- React + TypeScript
+- PostgreSQL
+- Docker
+
+# INTEGRANTES
+
+- Andrés Zavala Alvarado CARNET: za21010
+# Integrantes
+
+- Tatiana Carolina Martinez Franco (MF24026)
 * Spring Boot
 * React + TypeScript
 * PostgreSQL
 * Docker
 
 Carlos Chinchilla - cm23003.
+\## Integrantes
+
+
+
+\- Belkis Carolina Ramirez Flores rf24026
 
