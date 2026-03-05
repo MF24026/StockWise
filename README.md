@@ -15,6 +15,8 @@ Proyecto desarrollado como práctica académica utilizando:
 - PostgreSQL
 - Docker
 
+INTEGRANTES
+-Ricardo Ernesto Paiz Lemus PL23022
 # INTEGRANTES
 
 - Andrés Zavala Alvarado CARNET: za21010
