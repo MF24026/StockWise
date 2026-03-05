@@ -10,28 +10,20 @@ la toma de decisiones.
 
 Proyecto desarrollado como práctica académica utilizando:
 
+## Tecnologías
+
+- Java 21
 - Spring Boot
 - React + TypeScript
 - PostgreSQL
 - Docker
 
-INTEGRANTES
--Ricardo Ernesto Paiz Lemus PL23022
-# INTEGRANTES
-
-- Andrés Zavala Alvarado CARNET: za21010
-# Integrantes
+## INTEGRANTES
 
 - Tatiana Carolina Martinez Franco (MF24026)
-* Spring Boot
-* React + TypeScript
-* PostgreSQL
-* Docker
+- Andrés Zavala Alvarado CARNET: za21010
+- Carlos Chinchilla - cm23003.
+- Belkis Carolina Ramirez Flores rf24026
+- Ricardo Ernesto Paiz Lemus PL23022
 
-Carlos Chinchilla - cm23003.
-\## Integrantes
-
-
-
-\- Belkis Carolina Ramirez Flores rf24026
 
