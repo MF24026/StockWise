@@ -9,6 +9,14 @@ la toma de decisiones.
 
 Proyecto desarrollado como práctica académica utilizando:
 
+- Spring Boot
+- React + TypeScript
+- PostgreSQL
+- Docker
+
+# Integrantes
+
+- Tatiana Carolina Martinez Franco (MF24026)
 * Spring Boot
 * React + TypeScript
 * PostgreSQL
