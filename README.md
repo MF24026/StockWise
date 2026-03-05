@@ -9,7 +9,10 @@ la toma de decisiones.
 
 Proyecto desarrollado como práctica académica utilizando:
 
-- Spring Boot
-- React + TypeScript
-- PostgreSQL
-- Docker
+* Spring Boot
+* React + TypeScript
+* PostgreSQL
+* Docker
+
+Carlos Chinchilla - cm23003.
+
