@@ -18,3 +18,17 @@ Proyecto desarrollado como práctica académica utilizando:
 # INTEGRANTES
 
 - Andrés Zavala Alvarado CARNET: za21010
+# Integrantes
+
+- Tatiana Carolina Martinez Franco (MF24026)
+* Spring Boot
+* React + TypeScript
+* PostgreSQL
+* Docker
+
+\## Integrantes
+
+
+
+\- Belkis Carolina Ramirez Flores rf24026
+
