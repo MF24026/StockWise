@@ -26,6 +26,7 @@ Proyecto desarrollado como práctica académica utilizando:
 * PostgreSQL
 * Docker
 
+Carlos Chinchilla - cm23003.
 \## Integrantes
 
 
