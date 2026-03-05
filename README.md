@@ -17,3 +17,14 @@ Proyecto desarrollado como práctica académica utilizando:
 # Integrantes
 
 - Tatiana Carolina Martinez Franco (MF24026)
+* Spring Boot
+* React + TypeScript
+* PostgreSQL
+* Docker
+
+\## Integrantes
+
+
+
+\- Belkis Carolina Ramirez Flores rf24026
+
