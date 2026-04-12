@@ -1,3 +1,15 @@
+package com.stockwise.stockwise.controller;
+
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
+
+import java.util.List;
+
+import com.stockwise.stockwise.service.ProductService;
+import com.stockwise.stockwise.dto.ProductRequestDTO;
+import com.stockwise.stockwise.dto.ProductResponseDTO;
+
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
