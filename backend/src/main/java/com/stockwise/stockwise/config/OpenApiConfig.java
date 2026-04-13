@@ -1,6 +1,7 @@
 package com.stockwise.stockwise.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,9 @@ public class OpenApiConfig {
                 .info(new Info()
                         .title("API de StockWise")
                         .version("1.0")
-                        .description("Documentación de la API para el sistema de inventario StockWise - Laboratorio 2."));
+                        .description("Documentación de la API para el sistema de inventario StockWise - Laboratorio 2.")
+                        .contact(new Contact()
+                                .name("Equipo StockWise")
+                                .email("mf24026@ues.edu.sv"))); 
     }
 }
