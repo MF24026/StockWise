@@ -1,2 +1,8 @@
 C:\Users\carlo\StockWise\backend\src\main\java\com\stockwise\stockwise\config\OpenApiConfig.java
+C:\Users\carlo\StockWise\backend\src\main\java\com\stockwise\stockwise\controller\ProductController.java
+C:\Users\carlo\StockWise\backend\src\main\java\com\stockwise\stockwise\dto\productRequestDTO.java
+C:\Users\carlo\StockWise\backend\src\main\java\com\stockwise\stockwise\dto\productResponseDTO.java
+C:\Users\carlo\StockWise\backend\src\main\java\com\stockwise\stockwise\entity\Product.java
+C:\Users\carlo\StockWise\backend\src\main\java\com\stockwise\stockwise\repository\ProductRepository.java
+C:\Users\carlo\StockWise\backend\src\main\java\com\stockwise\stockwise\service\productService.java
 C:\Users\carlo\StockWise\backend\src\main\java\com\stockwise\stockwise\StockwiseApplication.java

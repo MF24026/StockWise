@@ -1,2 +1,8 @@
+com\stockwise\stockwise\repository\ProductRepository.class
+com\stockwise\stockwise\service\productService.class
 com\stockwise\stockwise\config\OpenApiConfig.class
+com\stockwise\stockwise\controller\ProductController.class
+com\stockwise\stockwise\dto\productResponseDTO.class
+com\stockwise\stockwise\dto\productRequestDTO.class
 com\stockwise\stockwise\StockwiseApplication.class
+com\stockwise\stockwise\entity\Product.class
