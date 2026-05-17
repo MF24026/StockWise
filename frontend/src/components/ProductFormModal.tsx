@@ -58,10 +58,46 @@ export function ProductFormModal({
 
   if (!open) return null;
 
+//funcion de validacion 
+
+  function validateForm() {
+  const errors: Record<string, string> = {};
+
+  if (!data.nombre.trim()) {
+    errors.nombre = "El nombre es obligatorio";
+  } else if (data.nombre.trim().length < 3) {
+    errors.nombre = "Debe tener al menos 3 caracteres";
+  }
+
+  if (data.precio <= 0) {
+    errors.precio = "El precio debe ser mayor a 0";
+  }
+
+  if (data.stock < 0) {
+    errors.stock = "El stock no puede ser negativo";
+  }
+
+  if (data.stockMinimo < 0) {
+    errors.stockMinimo = "El stock mínimo no puede ser negativo";
+  }
+
+  setFieldErrors(errors);
+
+  return Object.keys(errors).length === 0;
+}
+
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+
+
+    e.preventDefault();
+
+    if (!validateForm()) {
+    return;
+    }
     e.preventDefault();
     setSaving(true);
     setErrorMsg(null);
+
     try {
       await onSubmit(data);
       onClose();
@@ -96,6 +132,9 @@ export function ProductFormModal({
         <form onSubmit={handleSubmit} className="grid gap-4">
           <Field label="Nombre" required>
             <Input
+            {fieldErrors.nombre && (
+            <p className="text-sm text-red-500">{fieldErrors.nombre}</p>
+            )}
               value={data.nombre}
               onChange={(e) => setData({ ...data, nombre: e.target.value })}
               placeholder="Ej. Taladro inalambrico 18V"
@@ -115,6 +154,9 @@ export function ProductFormModal({
 
           <Field label="Precio" required>
             <Input
+            {fieldErrors.precio && (
+            <p className="text-sm text-red-500">{fieldErrors.precio}</p>
+            )}
               type="number"
               step="0.01"
               min="0"
@@ -130,6 +172,9 @@ export function ProductFormModal({
           <div className="grid grid-cols-2 gap-3">
             <Field label="Stock actual" required>
               <Input
+              {fieldErrors.stock && (
+              <p className="text-sm text-red-500">{fieldErrors.stock}</p>
+              )}
                 type="number"
                 min="0"
                 value={data.stock}
@@ -141,6 +186,9 @@ export function ProductFormModal({
             </Field>
             <Field label="Stock minimo" hint="Para alertas">
               <Input
+              {fieldErrors.stockMinimo && (
+             <p className="text-sm text-red-500">{fieldErrors.stockMinimo}</p>
+              )}
                 type="number"
                 min="0"
                 value={data.stockMinimo}
