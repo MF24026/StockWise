@@ -1,3 +1,4 @@
+import { Toaster } from 'react-hot-toast';
 import { ThemeProvider } from "@/context/ThemeContext";
 import { ProductsPage } from "@/pages/ProductsPage";
 

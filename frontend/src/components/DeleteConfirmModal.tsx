@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { Product } from "@/types/product";
 import { Button, Card, Icon } from "@/components/ui";
+import toast from "react-hot-toast";
 
 // Responsable: Andres Zavala Alvarado (za21010)
 // Tarea:
@@ -35,6 +36,12 @@ export function DeleteConfirmModal({
     setErrorMsg(null);
     try {
       await onConfirm();
+      toast.success("Producto eliminado correctamente", {
+  style: {
+    background: "#22c55e",
+    color: "#fff",
+  },
+});
       onClose();
     } catch (err) {
       setErrorMsg(
