@@ -3,8 +3,7 @@ import type { Product, ProductRequest } from "@/types/product";
 import { Button, Card, Field, Input, Textarea } from "@/components/ui";
 
 // Responsables compartidos de este componente:
-//   - Ricardo Ernesto Paiz Lemus (PL23022): mejorar comportamiento del modo "crear"
-//   - Carlos Chinchilla (cm23003): mejorar comportamiento del modo "editar"
+//   - Ricardo Ernesto Paiz Lemus (PL23022): mejorar comportamiento del modo "crear" con mensajes de error
 // Tarea:
 //   - Estilizar el modal segun el diseño de StockWise
 //   - Añadir validaciones (nombre requerido, precio mayor a 0, stock no negativo)
@@ -38,6 +37,8 @@ export function ProductFormModal({
   const [data, setData] = useState<ProductRequest>(EMPTY);
   const [saving, setSaving] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  
 
   useEffect(() => {
     if (open) {
@@ -58,26 +59,29 @@ export function ProductFormModal({
 
   if (!open) return null;
 
-//funcion de validacion 
-
+// funcion de mensajes de error
   function validateForm() {
   const errors: Record<string, string> = {};
 
-  if (!data.nombre.trim()) {
+  // Nombre
+  if (data.nombre.trim() === "") {
     errors.nombre = "El nombre es obligatorio";
   } else if (data.nombre.trim().length < 3) {
     errors.nombre = "Debe tener al menos 3 caracteres";
   }
 
-  if (data.precio <= 0) {
+  // Precio
+  if (isNaN(data.precio) || data.precio <= 0) {
     errors.precio = "El precio debe ser mayor a 0";
   }
 
-  if (data.stock < 0) {
+  // Stock
+  if (isNaN(data.stock) || data.stock < 0) {
     errors.stock = "El stock no puede ser negativo";
   }
 
-  if (data.stockMinimo < 0) {
+  // Stock mínimo
+  if (isNaN(data.stockMinimo) || data.stockMinimo < 0) {
     errors.stockMinimo = "El stock mínimo no puede ser negativo";
   }
 
@@ -85,21 +89,23 @@ export function ProductFormModal({
 
   return Object.keys(errors).length === 0;
 }
+ 
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
 
 
-    e.preventDefault();
+ async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  e.preventDefault();
 
-    if (!validateForm()) {
+  if (!validateForm()) {
     return;
-    }
-    e.preventDefault();
-    setSaving(true);
-    setErrorMsg(null);
+  }
 
-    try {
-      await onSubmit(data);
+  setSaving(true);
+  setErrorMsg(null);
+
+  try {
+    await onSubmit(data);
+
       onClose();
     } catch (err) {
       setErrorMsg(
@@ -127,19 +133,22 @@ export function ProductFormModal({
           <div className="mb-4 rounded-lg border border-danger bg-danger-bg px-3 py-2 text-sm text-danger-dark">
             {errorMsg}
           </div>
-        )}
+        )} 
+      
+        
+
 
         <form onSubmit={handleSubmit} className="grid gap-4">
           <Field label="Nombre" required>
             <Input
-            {fieldErrors.nombre && (
-            <p className="text-sm text-red-500">{fieldErrors.nombre}</p>
-            )}
               value={data.nombre}
               onChange={(e) => setData({ ...data, nombre: e.target.value })}
               placeholder="Ej. Taladro inalambrico 18V"
               required
             />
+            {fieldErrors.nombre && (
+  <p className="text-sm text-red-500">{fieldErrors.nombre}</p>
+)}
           </Field>
 
           <Field label="Descripcion">
@@ -154,9 +163,6 @@ export function ProductFormModal({
 
           <Field label="Precio" required>
             <Input
-            {fieldErrors.precio && (
-            <p className="text-sm text-red-500">{fieldErrors.precio}</p>
-            )}
               type="number"
               step="0.01"
               min="0"
@@ -165,38 +171,43 @@ export function ProductFormModal({
               onChange={(e) =>
                 setData({ ...data, precio: Number(e.target.value) })
               }
-              required
-            />
+              required/>
+              {fieldErrors.precio && (
+             <p className="text-sm text-red-500">{fieldErrors.precio}</p>
+            )}
           </Field>
 
           <div className="grid grid-cols-2 gap-3">
             <Field label="Stock actual" required>
               <Input
-              {fieldErrors.stock && (
-              <p className="text-sm text-red-500">{fieldErrors.stock}</p>
-              )}
                 type="number"
                 min="0"
                 value={data.stock}
                 onChange={(e) =>
                   setData({ ...data, stock: Number(e.target.value) })
                 }
-                required
-              />
+                required/>
+                {fieldErrors.stock && (
+                <p className="text-sm text-red-500">{fieldErrors.stock}</p>
+                )}
             </Field>
+
             <Field label="Stock minimo" hint="Para alertas">
               <Input
-              {fieldErrors.stockMinimo && (
-             <p className="text-sm text-red-500">{fieldErrors.stockMinimo}</p>
-              )}
                 type="number"
                 min="0"
                 value={data.stockMinimo}
                 onChange={(e) =>
                   setData({ ...data, stockMinimo: Number(e.target.value) })
                 }
-              />
+               />
+
+               {fieldErrors.stockMinimo && (
+               <p className="text-sm text-red-500">{fieldErrors.stockMinimo}</p>
+                )}
             </Field>
+
+
           </div>
 
           <div className="flex flex-col-reverse gap-2 pt-2 sm:flex-row sm:justify-end">
