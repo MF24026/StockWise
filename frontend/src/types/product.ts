@@ -1,15 +1,31 @@
-export interface Product {
+import type { Categoria } from "./categoria";
+
+export interface Producto {
   id: number;
   nombre: string;
   descripcion: string;
   precio: number;
   stock: number;
   stockMinimo: number;
+  proveedorId: number;
+  proveedorNombre: string;
+  categorias: Categoria[];
+  createdAt?: string;
 }
 
-export type ProductRequest = Omit<Product, "id">;
+export interface ProductoRequest {
+  nombre: string;
+  descripcion: string;
+  precio: number;
+  stock: number;
+  stockMinimo: number;
+  proveedorId: number;
+  categoriaIds: number[];
+}
 
-export type ProductId = Product["id"];
+export type Product = Producto;
+export type ProductRequest = ProductoRequest;
+export type ProductId = Producto["id"];
 
 export type StockStatus = "out" | "low" | "ok";
 

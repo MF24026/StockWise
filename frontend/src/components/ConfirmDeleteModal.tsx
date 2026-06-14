@@ -1,34 +1,25 @@
 import { useState } from "react";
-import type { Product } from "@/types/product";
 import { Button, Card, Icon } from "@/components/ui";
 
-// Responsable: Andres Zavala Alvarado (za21010)
-// Tarea:
-//   - Estilizar el modal segun el diseño de StockWise
-//   - Mobile: bottom sheet (deslizable desde abajo, swipe-down para cerrar)
-//   - Desktop: modal centrado con icono de alerta destacado
-//   - Toast verde de confirmacion tras eliminar
-//   - Como ultima tarea: revisar responsive global de todas las vistas
-//     y ajustar breakpoints donde sea necesario
-// Las props ya estan definidas, no cambiarlas para no romper la integracion.
-
-interface DeleteConfirmModalProps {
+interface ConfirmDeleteModalProps {
   open: boolean;
-  product?: Product;
+  titulo: string;
+  nombre?: string;
   onClose: () => void;
   onConfirm: () => Promise<void> | void;
 }
 
-export function DeleteConfirmModal({
+export function ConfirmDeleteModal({
   open,
-  product,
+  titulo,
+  nombre,
   onClose,
   onConfirm,
-}: DeleteConfirmModalProps) {
+}: ConfirmDeleteModalProps) {
   const [deleting, setDeleting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  if (!open || !product) return null;
+  if (!open) return null;
 
   async function handleConfirm() {
     setDeleting(true);
@@ -38,9 +29,7 @@ export function DeleteConfirmModal({
       onClose();
     } catch (err) {
       setErrorMsg(
-        err instanceof Error
-          ? err.message
-          : "No se pudo eliminar el producto.",
+        err instanceof Error ? err.message : "No se pudo eliminar el registro.",
       );
     } finally {
       setDeleting(false);
@@ -55,11 +44,13 @@ export function DeleteConfirmModal({
             <Icon name="alertTri" size={20} stroke={2} />
           </div>
           <div className="flex-1">
-            <h2 className="text-lg font-bold">Eliminar producto</h2>
-            <p className="mt-1 text-sm text-ink-muted">
-              Vas a eliminar <strong>"{product.nombre}"</strong>. Esta accion
-              no se puede deshacer.
-            </p>
+            <h2 className="text-lg font-bold">{titulo}</h2>
+            {nombre && (
+              <p className="mt-1 text-sm text-ink-muted">
+                Vas a eliminar <strong>"{nombre}"</strong>. Esta accion no se
+                puede deshacer.
+              </p>
+            )}
           </div>
         </div>
 
@@ -70,11 +61,7 @@ export function DeleteConfirmModal({
         )}
 
         <div className="mt-5 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
-          <Button
-            variant="secondary"
-            onClick={onClose}
-            disabled={deleting}
-          >
+          <Button variant="secondary" onClick={onClose} disabled={deleting}>
             Cancelar
           </Button>
           <Button
