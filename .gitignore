@@ -30,10 +30,10 @@ docs/*
 # IDE / editor local
 .idea/
 .vscode/
-.claude/
 
-# Playwright temp
+# Cache de herramientas auxiliares
 .playwright-mcp/
+.cache/
 
 # Capturas sueltas en la raiz (uso local, no se versionan)
 desktop-*.png
