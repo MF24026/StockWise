@@ -36,8 +36,8 @@ export function ProductFormModal({
   const [data, setData] = useState<ProductoRequest>(EMPTY);
   const [saving, setSaving] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-  
+  const [fieldErrors] = useState<Record<string, string>>({});
+
 
   useEffect(() => {
     if (!open) return;
