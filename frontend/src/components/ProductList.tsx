@@ -28,7 +28,7 @@ export function ProductList({ productos, onEdit, onDelete }: ProductListProps) {
               <span className="font-mono text-xs text-ink-muted">#{p.id}</span>
               <StockBadge stock={p.stock} stockMinimo={p.stockMinimo} size="sm" />
             </div>
-            <div className="mt-1 font-semibold text-ink dark:text-surface">
+            <div className="mt-2 font-semibold text-ink dark:text-surface">
               {p.nombre}
             </div>
             {p.descripcion && (
@@ -39,8 +39,8 @@ export function ProductList({ productos, onEdit, onDelete }: ProductListProps) {
               <span className="text-ink-muted">
                 Stock: <strong>{p.stock}</strong>
               </span>
-              <span className="text-ink-muted">
-                Min: <strong>{p.stockMinimo}</strong>
+              <span>
+                Stock minimo: <strong>{p.stockMinimo}</strong>
               </span>
               <span className="text-ink-muted">
                 Proveedor: <strong>{p.proveedorNombre}</strong>
@@ -56,12 +56,12 @@ export function ProductList({ productos, onEdit, onDelete }: ProductListProps) {
               </div>
             )}
           </div>
-          <div className="flex gap-2 sm:flex-col sm:gap-2">
+          <div className="flex gap-2">
             <Button
               size="sm"
               variant="secondary"
               onClick={() => onEdit(p)}
-              className="flex-1 sm:flex-none"
+              className="flex-1"
             >
               Editar
             </Button>
@@ -69,7 +69,7 @@ export function ProductList({ productos, onEdit, onDelete }: ProductListProps) {
               size="sm"
               variant="danger"
               onClick={() => onDelete(p)}
-              className="flex-1 sm:flex-none"
+              className="flex-1"
             >
               Eliminar
             </Button>
@@ -77,5 +77,65 @@ export function ProductList({ productos, onEdit, onDelete }: ProductListProps) {
         </Card>
       ))}
     </div>
+
+    {/* vista desktop: tabla */}
+    <div className="hidden overflow-x-auto md:block">
+      <table className="w-full border-collapse text-left text-sm">
+        <thead>
+          <tr className="border-b border-surface-muted text-ink-muted">
+            <th className="px-3 py-3">ID</th>
+            <th className="px-3 py-3">Nombre</th>
+            <th className="px-3 py-3">Descripción</th>
+            <th className="px-3 py-3">Precio</th>
+            <th className="px-3 py-3">Stock</th>
+            <th className="px-3 py-3">Stock Min</th>
+            <th className="px-3 py-3">Estado</th>
+            <th className="px-3 py-3 text-right">Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {products.map((p) => (
+            <tr key={p.id} className="border-b border-surface-muted">
+              <td className="px-3 py-3 font-mono text-xs text-ink-muted">
+                #{p.id}
+              </td>
+              <td className="px-3 py-3 font-semibold">{p.nombre}</td>
+              <td className="px-3 py-3 text-ink-muted">
+                {p.descripcion || "Sin descripción"}
+              </td>
+              <td className="px-3 py-3 font-bold">
+                ${p.precio.toFixed(2)}
+              </td>
+              <td className="px-3 py-3">{p.stock}</td>
+              <td className="px-3 py-3">{p.stockMinimo}</td>
+              <td className="px-3 py-3">
+                <StockBadge stock={p.stock} stockMinimo={p.stockMinimo} size="sm" />
+              </td>
+              <td className="px-3 py-3">
+                <div className="flex justify-end gap-2">
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    onClick={() => onEdit(p)}
+                  >
+                    Editar
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="danger"
+                    onClick={() => onDelete(p)}
+                  >
+                    Eliminar
+                  </Button>
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </>
+
   );
 }

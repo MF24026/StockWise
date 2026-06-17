@@ -36,6 +36,8 @@ export function ProductFormModal({
   const [data, setData] = useState<ProductoRequest>(EMPTY);
   const [saving, setSaving] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  
 
   useEffect(() => {
     if (!open) return;
@@ -105,7 +107,10 @@ export function ProductFormModal({
           <div className="mb-4 rounded-lg border border-danger bg-danger-bg px-3 py-2 text-sm text-danger-dark">
             {errorMsg}
           </div>
-        )}
+        )} 
+      
+        
+
 
         <form onSubmit={handleSubmit} className="grid gap-4">
           <Field label="Nombre" required>
@@ -115,6 +120,9 @@ export function ProductFormModal({
               placeholder="Ej. Taladro inalambrico 18V"
               required
             />
+            {fieldErrors.nombre && (
+  <p className="text-sm text-red-500">{fieldErrors.nombre}</p>
+)}
           </Field>
 
           <Field label="Descripcion">
@@ -147,6 +155,7 @@ export function ProductFormModal({
                 required
               />
             </Field>
+
             <Field label="Stock minimo" hint="Para alertas">
               <Input
                 type="number"
@@ -155,8 +164,14 @@ export function ProductFormModal({
                 onChange={(e) =>
                   setData({ ...data, stockMinimo: Number(e.target.value) })
                 }
-              />
+               />
+
+               {fieldErrors.stockMinimo && (
+               <p className="text-sm text-red-500">{fieldErrors.stockMinimo}</p>
+                )}
             </Field>
+
+
           </div>
 
           <Field label="Proveedor" required>

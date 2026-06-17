@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button, Card, Icon } from "@/components/ui";
+import toast from "react-hot-toast";
 
 interface ConfirmDeleteModalProps {
   open: boolean;
@@ -26,6 +27,12 @@ export function ConfirmDeleteModal({
     setErrorMsg(null);
     try {
       await onConfirm();
+      toast.success("Producto eliminado correctamente", {
+  style: {
+    background: "#22c55e",
+    color: "#fff",
+  },
+});
       onClose();
     } catch (err) {
       setErrorMsg(
