@@ -23,5 +23,18 @@
 hs_err_pid*
 replay_pid*
 
-# Documentation (local only)
-docs/
+# Docs locales (notas, drafts). Permitimos solo docs/mockups para las evidencias del README.
+docs/*
+!docs/mockups/
+
+# IDE / editor local
+.idea/
+.vscode/
+
+# Cache de herramientas auxiliares
+.playwright-mcp/
+.cache/
+
+# Capturas sueltas en la raiz (uso local, no se versionan)
+desktop-*.png
+mobile-*.png

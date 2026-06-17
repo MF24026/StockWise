@@ -1,0 +1,64 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: stockwise-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-stockwise}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-stockwise}
+      POSTGRES_DB: ${POSTGRES_DB:-stockwise_db}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./database/01-init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+      - ./database/02-seed.sql:/docker-entrypoint-initdb.d/02-seed.sql:ro
+    ports:
+      - "5433:5432"
+    networks:
+      - stockwise-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-stockwise} -d ${POSTGRES_DB:-stockwise_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: stockwise-backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB:-stockwise_db}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-stockwise}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-stockwise}
+      SERVER_PORT: 8080
+      STOCKWISE_CORS_ORIGINS: http://localhost:8090,http://localhost:5173
+    ports:
+      - "8081:8080"
+    networks:
+      - stockwise-net
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: http://localhost:8081/api
+    container_name: stockwise-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "8090:80"
+    networks:
+      - stockwise-net
+
+volumes:
+  db_data:
+
+networks:
+  stockwise-net:
+    driver: bridge

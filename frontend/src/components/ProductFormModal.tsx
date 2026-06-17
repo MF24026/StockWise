@@ -1,111 +1,77 @@
 import { useEffect, useState, type FormEvent } from "react";
-import type { Product, ProductRequest } from "@/types/product";
+import type { Producto, ProductoRequest } from "@/types/product";
+import type { Proveedor } from "@/types/proveedor";
+import type { Categoria } from "@/types/categoria";
 import { Button, Card, Field, Input, Textarea } from "@/components/ui";
-
-// Responsables compartidos de este componente:
-//   - Ricardo Ernesto Paiz Lemus (PL23022): mejorar comportamiento del modo "crear" con mensajes de error
-// Tarea:
-//   - Estilizar el modal segun el diseño de StockWise
-//   - Añadir validaciones (nombre requerido, precio mayor a 0, stock no negativo)
-//   - Mostrar mensajes de error en cada campo
-//   - Layout mobile (full screen / sheet) y desktop (modal centrado)
-// Las props ya estan definidas, no cambiarlas para no romper la integracion.
 
 interface ProductFormModalProps {
   open: boolean;
   mode: "crear" | "editar";
-  initialValue?: Product;
+  initialValue?: Producto;
+  proveedores: Proveedor[];
+  categorias: Categoria[];
   onClose: () => void;
-  onSubmit: (data: ProductRequest) => Promise<void> | void;
+  onSubmit: (data: ProductoRequest) => Promise<void> | void;
 }
 
-const EMPTY: ProductRequest = {
+const EMPTY: ProductoRequest = {
   nombre: "",
   descripcion: "",
   precio: 0,
   stock: 0,
   stockMinimo: 0,
+  proveedorId: 0,
+  categoriaIds: [],
 };
 
 export function ProductFormModal({
   open,
   mode,
   initialValue,
+  proveedores,
+  categorias,
   onClose,
   onSubmit,
 }: ProductFormModalProps) {
-  const [data, setData] = useState<ProductRequest>(EMPTY);
+  const [data, setData] = useState<ProductoRequest>(EMPTY);
   const [saving, setSaving] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-  
+  const [fieldErrors] = useState<Record<string, string>>({});
+
 
   useEffect(() => {
-    if (open) {
-      setErrorMsg(null);
-      setData(
-        initialValue
-          ? {
-              nombre: initialValue.nombre,
-              descripcion: initialValue.descripcion ?? "",
-              precio: initialValue.precio,
-              stock: initialValue.stock,
-              stockMinimo: initialValue.stockMinimo ?? 0,
-            }
-          : EMPTY,
-      );
+    if (!open) return;
+    setErrorMsg(null);
+    if (initialValue) {
+      setData({
+        nombre: initialValue.nombre,
+        descripcion: initialValue.descripcion ?? "",
+        precio: Number(initialValue.precio),
+        stock: initialValue.stock,
+        stockMinimo: initialValue.stockMinimo,
+        proveedorId: initialValue.proveedorId,
+        categoriaIds: initialValue.categorias.map((c) => c.id),
+      });
+    } else {
+      setData({
+        ...EMPTY,
+        proveedorId: proveedores[0]?.id ?? 0,
+      });
     }
-  }, [open, initialValue]);
+  }, [open, initialValue, proveedores]);
 
   if (!open) return null;
 
-// funcion de mensajes de error
-  function validateForm() {
-  const errors: Record<string, string> = {};
-
-  // Nombre
-  if (data.nombre.trim() === "") {
-    errors.nombre = "El nombre es obligatorio";
-  } else if (data.nombre.trim().length < 3) {
-    errors.nombre = "Debe tener al menos 3 caracteres";
-  }
-
-  // Precio
-  if (isNaN(data.precio) || data.precio <= 0) {
-    errors.precio = "El precio debe ser mayor a 0";
-  }
-
-  // Stock
-  if (isNaN(data.stock) || data.stock < 0) {
-    errors.stock = "El stock no puede ser negativo";
-  }
-
-  // Stock mínimo
-  if (isNaN(data.stockMinimo) || data.stockMinimo < 0) {
-    errors.stockMinimo = "El stock mínimo no puede ser negativo";
-  }
-
-  setFieldErrors(errors);
-
-  return Object.keys(errors).length === 0;
-}
- 
-
-
-
- async function handleSubmit(e: FormEvent<HTMLFormElement>) {
-  e.preventDefault();
-
-  if (!validateForm()) {
-    return;
-  }
-
-  setSaving(true);
-  setErrorMsg(null);
-
-  try {
-    await onSubmit(data);
-
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (!data.proveedorId) {
+      setErrorMsg("Debes seleccionar un proveedor.");
+      return;
+    }
+    setSaving(true);
+    setErrorMsg(null);
+    try {
+      await onSubmit(data);
       onClose();
     } catch (err) {
       setErrorMsg(
@@ -116,13 +82,21 @@ export function ProductFormModal({
     }
   }
 
+  function toggleCategoria(id: number) {
+    setData((prev) => ({
+      ...prev,
+      categoriaIds: prev.categoriaIds.includes(id)
+        ? prev.categoriaIds.filter((c) => c !== id)
+        : [...prev.categoriaIds, id],
+    }));
+  }
+
   const title = mode === "crear" ? "Nuevo producto" : "Editar producto";
-  const submitLabel =
-    mode === "crear" ? "Guardar producto" : "Guardar cambios";
+  const submitLabel = mode === "crear" ? "Guardar producto" : "Guardar cambios";
 
   return (
     <div className="fixed inset-0 z-30 flex items-end justify-center bg-black/50 p-0 sm:items-center sm:p-4">
-      <Card className="w-full max-w-lg rounded-b-none sm:rounded-lg">
+      <Card className="max-h-[95vh] w-full max-w-lg overflow-y-auto rounded-b-none sm:rounded-lg">
         <h2 className="mb-1 text-xl font-bold">{title}</h2>
         <p className="mb-4 text-sm text-ink-muted">
           Completa los datos del producto. Los campos con asterisco son
@@ -154,9 +128,7 @@ export function ProductFormModal({
           <Field label="Descripcion">
             <Textarea
               value={data.descripcion}
-              onChange={(e) =>
-                setData({ ...data, descripcion: e.target.value })
-              }
+              onChange={(e) => setData({ ...data, descripcion: e.target.value })}
               placeholder="Describe el producto"
             />
           </Field>
@@ -168,13 +140,9 @@ export function ProductFormModal({
               min="0"
               prefix="$"
               value={data.precio}
-              onChange={(e) =>
-                setData({ ...data, precio: Number(e.target.value) })
-              }
-              required/>
-              {fieldErrors.precio && (
-             <p className="text-sm text-red-500">{fieldErrors.precio}</p>
-            )}
+              onChange={(e) => setData({ ...data, precio: Number(e.target.value) })}
+              required
+            />
           </Field>
 
           <div className="grid grid-cols-2 gap-3">
@@ -183,13 +151,9 @@ export function ProductFormModal({
                 type="number"
                 min="0"
                 value={data.stock}
-                onChange={(e) =>
-                  setData({ ...data, stock: Number(e.target.value) })
-                }
-                required/>
-                {fieldErrors.stock && (
-                <p className="text-sm text-red-500">{fieldErrors.stock}</p>
-                )}
+                onChange={(e) => setData({ ...data, stock: Number(e.target.value) })}
+                required
+              />
             </Field>
 
             <Field label="Stock minimo" hint="Para alertas">
@@ -209,6 +173,49 @@ export function ProductFormModal({
 
 
           </div>
+
+          <Field label="Proveedor" required>
+            <select
+              className="w-full rounded-md border border-ink-subtle/40 bg-surface px-3 py-2 text-sm text-ink focus:border-brand focus:outline-none dark:bg-ink-strong dark:text-surface"
+              value={data.proveedorId}
+              onChange={(e) =>
+                setData({ ...data, proveedorId: Number(e.target.value) })
+              }
+              required
+            >
+              <option value={0} disabled>
+                Selecciona un proveedor
+              </option>
+              {proveedores.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.nombre}
+                </option>
+              ))}
+            </select>
+          </Field>
+
+          <Field label="Categorias" hint="Selecciona una o varias">
+            <div className="flex flex-wrap gap-2">
+              {categorias.map((c) => {
+                const active = data.categoriaIds.includes(c.id);
+                return (
+                  <button
+                    key={c.id}
+                    type="button"
+                    onClick={() => toggleCategoria(c.id)}
+                    className={[
+                      "rounded-full border px-3 py-1 text-xs transition-colors",
+                      active
+                        ? "border-brand bg-brand text-white"
+                        : "border-ink-subtle/40 text-ink-muted hover:bg-ink-subtle/10",
+                    ].join(" ")}
+                  >
+                    {c.nombre}
+                  </button>
+                );
+              })}
+            </div>
+          </Field>
 
           <div className="flex flex-col-reverse gap-2 pt-2 sm:flex-row sm:justify-end">
             <Button
