@@ -67,19 +67,19 @@ export function ProductsPage() {
     <>
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">Productos</h1>
-          <p className="text-sm text-ink-muted">Inventario del sistema StockWise.</p>
+          <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">Gestion de Productos</h1>
+          <p className="text-sm text-ink-muted">Administra y consulta los productos registrados en el inventario.</p>
         </div>
         <Button
           leading={<Icon name="plus" size={16} />}
           onClick={() => setModal({ type: "create" })}
           disabled={proveedores.length === 0}
         >
-          Nuevo producto
+          Registrar producto
         </Button>
       </div>
 
-      {loading && <Card className="py-8 text-center text-ink-muted">Cargando...</Card>}
+      {loading && <Card className="py-8 text-center text-ink-muted">Cargando informacion de productos...</Card>}
 
       {error && (
         <Card className="border border-danger bg-danger-bg py-4 text-center text-danger-dark">

@@ -11,7 +11,7 @@ export function ProductList({ productos, onEdit, onDelete }: ProductListProps) {
   if (productos.length === 0) {
     return (
       <Card className="py-12 text-center text-ink-muted">
-        Aun no hay productos registrados.
+        Aún no hay productos registrados en el inventario.
       </Card>
     );
   }
@@ -42,7 +42,7 @@ export function ProductList({ productos, onEdit, onDelete }: ProductListProps) {
                   Stock: <strong>{p.stock}</strong>
                 </span>
                 <span className="text-ink-muted">
-                  Min: <strong>{p.stockMinimo}</strong>
+                  Mínimo: <strong>{p.stockMinimo}</strong>
                 </span>
                 <span className="text-ink-muted">
                   Proveedor: <strong>{p.proveedorNombre}</strong>
@@ -88,10 +88,10 @@ export function ProductList({ productos, onEdit, onDelete }: ProductListProps) {
               <th className="px-3 py-3">ID</th>
               <th className="px-3 py-3">Nombre</th>
               <th className="px-3 py-3">Proveedor</th>
-              <th className="px-3 py-3">Categorias</th>
+              <th className="px-3 py-3">Categorías</th>
               <th className="px-3 py-3 text-right">Precio</th>
               <th className="px-3 py-3 text-right">Stock</th>
-              <th className="px-3 py-3 text-right">Min</th>
+              <th className="px-3 py-3 text-right">Mínimo</th>
               <th className="px-3 py-3">Estado</th>
               <th className="px-3 py-3 text-right">Acciones</th>
             </tr>

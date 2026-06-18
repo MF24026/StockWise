@@ -91,7 +91,7 @@ export function ProductFormModal({
     }));
   }
 
-  const title = mode === "crear" ? "Nuevo producto" : "Editar producto";
+  const title = mode === "crear" ? "Registrar producto" : "Actualizar producto";
   const submitLabel = mode === "crear" ? "Guardar producto" : "Guardar cambios";
 
   return (
@@ -99,7 +99,7 @@ export function ProductFormModal({
       <Card className="max-h-[95vh] w-full max-w-lg overflow-y-auto rounded-b-none sm:rounded-lg">
         <h2 className="mb-1 text-xl font-bold">{title}</h2>
         <p className="mb-4 text-sm text-ink-muted">
-          Completa los datos del producto. Los campos con asterisco son
+          Completa la información del producto. Los campos marcados con (*) son
           obligatorios.
         </p>
 
@@ -117,7 +117,7 @@ export function ProductFormModal({
             <Input
               value={data.nombre}
               onChange={(e) => setData({ ...data, nombre: e.target.value })}
-              placeholder="Ej. Taladro inalambrico 18V"
+              placeholder="Ej. Taladro inalámbrico 18V"
               required
             />
             {fieldErrors.nombre && (
@@ -125,11 +125,11 @@ export function ProductFormModal({
 )}
           </Field>
 
-          <Field label="Descripcion">
+          <Field label="Descripción">
             <Textarea
               value={data.descripcion}
               onChange={(e) => setData({ ...data, descripcion: e.target.value })}
-              placeholder="Describe el producto"
+              placeholder="Ingrese una descripción del producto"
             />
           </Field>
 
@@ -156,7 +156,7 @@ export function ProductFormModal({
               />
             </Field>
 
-            <Field label="Stock minimo" hint="Para alertas">
+            <Field label="Stock mínimo" hint="Cantidad mínima para generar alertas">
               <Input
                 type="number"
                 min="0"
@@ -184,7 +184,7 @@ export function ProductFormModal({
               required
             >
               <option value={0} disabled>
-                Selecciona un proveedor
+                Seleccione un proveedor
               </option>
               {proveedores.map((p) => (
                 <option key={p.id} value={p.id}>
@@ -194,7 +194,7 @@ export function ProductFormModal({
             </select>
           </Field>
 
-          <Field label="Categorias" hint="Selecciona una o varias">
+          <Field label="Categorías" hint="Seleccione una o varias categorías">
             <div className="flex flex-wrap gap-2">
               {categorias.map((c) => {
                 const active = data.categoriaIds.includes(c.id);
@@ -227,7 +227,7 @@ export function ProductFormModal({
               Cancelar
             </Button>
             <Button type="submit" disabled={saving}>
-              {saving ? "Guardando..." : submitLabel}
+              {saving ? "Guardando información..." : submitLabel}
             </Button>
           </div>
         </form>
