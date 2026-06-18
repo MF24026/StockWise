@@ -58,9 +58,9 @@ export function MovimientoFormModal({
   return (
     <div className="fixed inset-0 z-30 flex items-end justify-center bg-black/50 p-0 sm:items-center sm:p-4">
       <Card className="w-full max-w-lg rounded-b-none sm:rounded-lg">
-        <h2 className="mb-1 text-xl font-bold">Nuevo movimiento</h2>
+        <h2 className="mb-1 text-xl font-bold">Registrar nuevo movimiento</h2>
         <p className="mb-4 text-sm text-ink-muted">
-          Las entradas suman stock y las salidas lo restan.
+          Especifique el tipo de operación. Las entradas incrementan el inventario y las salidas disminuyen las existencias.
         </p>
 
         {errorMsg && (
@@ -80,7 +80,7 @@ export function MovimientoFormModal({
               required
             >
               <option value={0} disabled>
-                Selecciona un producto
+                Seleccione un producto de la lista
               </option>
               {productos.map((p) => (
                 <option key={p.id} value={p.id}>
@@ -124,7 +124,7 @@ export function MovimientoFormModal({
             <Input
               value={data.motivo ?? ""}
               onChange={(e) => setData({ ...data, motivo: e.target.value })}
-              placeholder="Ej. Compra al proveedor / Venta mayorista"
+              placeholder="Ej. Abastecimiento de proveedor / Ajuste por inventario físico"
             />
           </Field>
 

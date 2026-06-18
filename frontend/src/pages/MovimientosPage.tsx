@@ -64,7 +64,7 @@ export function MovimientosPage() {
         <div>
           <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">Movimientos</h1>
           <p className="text-sm text-ink-muted">
-            Historial de entradas y salidas de stock.
+            Consulta el historial detallado de entradas y salidas de inventario en tiempo real.
           </p>
         </div>
         <Button
@@ -100,7 +100,7 @@ export function MovimientosPage() {
                   <Badge
                     tone={m.tipo === "ENTRADA" ? "success" : "warning"}
                     size="sm"
-                  >
+                    >
                     {m.tipo}
                   </Badge>
                 </div>
