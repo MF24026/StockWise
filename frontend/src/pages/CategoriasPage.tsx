@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { Categoria, CategoriaRequest } from "@/types/categoria";
-import { categoriasApi } from "@/api/categorias";
+import { Categorías del SistemaApi } from "@/api/Categorías del Sistema";
 import { apiErrorMessage } from "@/api/client";
 import { CategoriaFormModal } from "@/components/CategoriaFormModal";
 import { ConfirmDeleteModal } from "@/components/ConfirmDeleteModal";
@@ -12,8 +12,8 @@ type ModalState =
   | { type: "edit"; categoria: Categoria }
   | { type: "delete"; categoria: Categoria };
 
-export function CategoriasPage() {
-  const [categorias, setCategorias] = useState<Categoria[]>([]);
+export function Categorías del SistemaPage() {
+  const [Categorías del Sistema, setCategorías del Sistema] = useState<Categoria[]>([]);
   const [modal, setModal] = useState<ModalState>({ type: "none" });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -22,7 +22,7 @@ export function CategoriasPage() {
     setLoading(true);
     setError(null);
     try {
-      setCategorias(await categoriasApi.list());
+      setCategorías del Sistema(await Categorías del SistemaApi.list());
     } catch (err) {
       setError(apiErrorMessage(err));
     } finally {
@@ -36,16 +36,16 @@ export function CategoriasPage() {
 
   async function handleSubmit(data: CategoriaRequest) {
     if (modal.type === "edit") {
-      await categoriasApi.update(modal.categoria.id, data);
+      await Categorías del SistemaApi.update(modal.categoria.id, data);
     } else {
-      await categoriasApi.create(data);
+      await Categorías del SistemaApi.create(data);
     }
     await reload();
   }
 
   async function handleConfirmDelete() {
     if (modal.type !== "delete") return;
-    await categoriasApi.remove(modal.categoria.id);
+    await Categorías del SistemaApi.remove(modal.categoria.id);
     await reload();
   }
 
@@ -53,7 +53,7 @@ export function CategoriasPage() {
     <>
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">Categorias</h1>
+          <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">Categorías del Sistema</h1>
           <p className="text-sm text-ink-muted">Clasificacion de productos.</p>
         </div>
         <Button
@@ -72,15 +72,15 @@ export function CategoriasPage() {
         </Card>
       )}
 
-      {!loading && !error && categorias.length === 0 && (
+      {!loading && !error && Categorías del Sistema.length === 0 && (
         <Card className="py-12 text-center text-ink-muted">
-          Aun no hay categorias registradas.
+          Aun no hay Categorías del Sistema registradas.
         </Card>
       )}
 
-      {!loading && !error && categorias.length > 0 && (
+      {!loading && !error && Categorías del Sistema.length > 0 && (
         <div className="grid gap-3 sm:grid-cols-2">
-          {categorias.map((c) => (
+          {Categorías del Sistema.map((c) => (
             <Card key={c.id} className="flex flex-col gap-3">
               <div className="min-w-0 flex-1">
                 <div className="font-mono text-xs text-ink-muted">#{c.id}</div>
