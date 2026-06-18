@@ -54,7 +54,7 @@ export function ProveedoresPage() {
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">Proveedores</h1>
-          <p className="text-sm text-ink-muted">Empresas que suministran productos.</p>
+          <p className="text-sm text-ink-muted">Administra y consulta los proveedores registrados en el sistema.</p>
         </div>
         <Button
           leading={<Icon name="plus" size={16} />}
@@ -74,7 +74,7 @@ export function ProveedoresPage() {
 
       {!loading && !error && proveedores.length === 0 && (
         <Card className="py-12 text-center text-ink-muted">
-          Aun no hay proveedores registrados.
+          Aún no se han registrado proveedores...
         </Card>
       )}
 

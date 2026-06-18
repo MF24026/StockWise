@@ -61,14 +61,17 @@ export function ProveedorFormModal({
     }
   }
 
-  const title = mode === "crear" ? "Nuevo proveedor" : "Editar proveedor";
+ const title =
+  mode === "crear"
+    ? "Registrar proveedor"
+    : "Actualizar proveedor";
 
   return (
     <div className="fixed inset-0 z-30 flex items-end justify-center bg-black/50 p-0 sm:items-center sm:p-4">
       <Card className="w-full max-w-lg rounded-b-none sm:rounded-lg">
         <h2 className="mb-1 text-xl font-bold">{title}</h2>
         <p className="mb-4 text-sm text-ink-muted">
-          Datos del proveedor que suministra productos al inventario.
+          Ingrese la información del proveedor para mantener actualizado el inventario.
         </p>
 
         {errorMsg && (
@@ -82,7 +85,7 @@ export function ProveedorFormModal({
             <Input
               value={data.nombre}
               onChange={(e) => setData({ ...data, nombre: e.target.value })}
-              placeholder="Ej. Ferreteria El Martillo"
+              placeholder="Ingrese el nombre del proveedor"
               required
             />
           </Field>
@@ -91,7 +94,7 @@ export function ProveedorFormModal({
             <Input
               value={data.telefono ?? ""}
               onChange={(e) => setData({ ...data, telefono: e.target.value })}
-              placeholder="Ej. 2222-1010"
+             placeholder="Ingrese el número de teléfono"
             />
           </Field>
 
@@ -100,7 +103,7 @@ export function ProveedorFormModal({
               type="email"
               value={data.email ?? ""}
               onChange={(e) => setData({ ...data, email: e.target.value })}
-              placeholder="contacto@proveedor.sv"
+              placeholder="correo@empresa.com"
             />
           </Field>
 
@@ -108,7 +111,7 @@ export function ProveedorFormModal({
             <Input
               value={data.direccion ?? ""}
               onChange={(e) => setData({ ...data, direccion: e.target.value })}
-              placeholder="Ciudad, calle"
+              placeholder="Ingrese la dirección del proveedor"
             />
           </Field>
 
