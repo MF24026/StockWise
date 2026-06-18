@@ -1,4 +1,4 @@
-import React, { useState } from "react"; // <-- Agrega 'React,' aquí
+import React, { useState } from "react"; 
 import { Button, Card, Icon } from "@/components/ui";
 import toast from "react-hot-toast";
 
