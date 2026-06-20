@@ -154,7 +154,11 @@ Las capturas viven en `docs/mockups/`:
 - `01-productos-light.png` - Listado de productos con relaciones.
 - `02-proveedores.png` - Página de proveedores.
 - `03-categorias.png` - Página de categorías.
-- `04-movimientos.png` - Historial de entradas y salidas.
+- `05-swagger-categorias.png` - Vista de categorias en Swagger.
+- `06-swagger-movimientos.png` - Vista de movimientos en Swagger
+- `07-swagger-productos.png` - Vista de productos en Swagger
+- `08-swagger-proveedores.png` - Vista de proveedoress en Swagger
+- `09-swagger-esquemas.png` - Vista de esquemas en Swagger
 
 ## Integrantes
 
